@@ -1,6 +1,7 @@
 call plug#begin('~/AppData/Local/nvim/plugged')
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
 Plug 'preservim/nerdtree'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'danilo-augusto/vim-afterglow'
@@ -20,13 +21,16 @@ Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-rmarkdown'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
+Plug 'ErichDonGubler/vim-sublime-monokai'
+Plug 'BurntSushi/ripgrep'
+Plug 'sharkdp/fd'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 call plug#end()
 
 inoremap jk <ESC>
+inoremap <expr> <cr> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
 
-colorscheme afterglow
-let SessionLoad = 1
+colorscheme sublimemonokai
 syntax on
 set noswapfile
 
@@ -44,27 +48,37 @@ set autoindent              " indent a new line the same amount as the line just
 set number                  " add line numbers
 set wildmode=longest,list   " get bash-like tab completions
 set cc=80                  " set an 80 column border for good coding style
-let g:airline_theme='afterglow'
-filetype plugin indent on   "allow auto-indenting depending on file type
-syntax on                   " syntax highlighting
+set linespace=3
 set mouse=a                 " enable mouse click
-set clipboard+=unnamedplus   " using system clipboard
-filetype plugin on
-" set cursorline              " highlight current cursorline
+
+set cursorline              " highlight current cursorline
 set ttyfast                 " Speed up scrolling in Vim
 set encoding=utf-8
-" set spell                 " enable spell check (may need to download language package)
-" set noswapfile            " disable creating swap file
-" set backupdir=~/.cache/vim " Directory to store backup files.
-autocmd FileType python map <buffer> <F9> :w<CR>:exec '!python' shellescape(@%, 1)<CR>
-autocmd FileType python imap <buffer> <F9> <esc>:w<CR>:exec '!python' shellescape(@%, 1)<CR>
+set guifont=Fura\ Code\ Regular\ Nerd\ Font\ Complete:h12
+
+
 let mapleader = ","
-nmap <leader>nt :NERDTree<cr>
+let SessionLoad = 1
 let g:python3_host_prog = 'C:\Users\anton.konev\AppData\Local\Programs\Python\Python38\python38.exe'
 let g:python_host_prog = 'C:\Users\anton.konev\AppData\Local\Programs\Python\Python38\python.exe'
+" airline options {{{
+let g:airline_theme='afterglow'
+let g:airline_powerline_fonts = 1 "Включить поддержку Powerline шрифтов
+let g:airline#extensions#keymap#enabled = 0 "Не показывать текущий маппинг
+let g:airline_section_z = "\ue0a1:%l/%L Col:%c" "Кастомная графа положения курсора
+let g:Powerline_symbols='unicode' "Поддержка unicode
+let g:airline#extensions#xkblayout#enabled = 0 "Про это позже расскажу
+" }}}
 
+
+autocmd FileType python map <buffer> <F9> :w<CR>:exec '!python' shellescape(@%, 1)<CR>
+filetype plugin on
+filetype plugin indent on   "allow auto-indenting depending on file type
+syntax on                   " syntax highlighting
+autocmd FileType python imap <buffer> <F9> <esc>:w<CR>:exec '!python' shellescape(@%, 1)<CR>
+nmap <leader>nt :NERDTree<cr>
 " jedi options {{{ 
-let g:jedi#auto_initialization = 1
+let g:jedi#auto_initialization = 0
 let g:jedi#completions_enabled = 0
 let g:jedi#auto_vim_configuration = 0
 let g:jedi#smart_auto_mappings = 0
@@ -102,3 +116,9 @@ autocmd FileType python,python3,py,py3 map <F5> :!python % <CR>
 autocmd Filetype r,R map <f5> :!Rscript % <CR>
 autocmd FileType CPP,Cpp,cpp map <F5> :!g++ % -o %:r.out<CR>
 
+" Telescope options {{{
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+" }}}

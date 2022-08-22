@@ -41,8 +41,6 @@ set mouse=v                 " middle-click paste with
 set hlsearch                " highlight search 
 set incsearch               " incremental search
 set tabstop=4               " number of columns occupied by a tab 
-set softtabstop=4           " see multiple spaces as tabstops so <BS> does the right thing
-set expandtab               " converts tabs to white space
 set shiftwidth=4            " width for autoindents
 set autoindent              " indent a new line the same amount as the line just typed
 set number                  " add line numbers
@@ -54,7 +52,7 @@ set mouse=a                 " enable mouse click
 set cursorline              " highlight current cursorline
 set ttyfast                 " Speed up scrolling in Vim
 set encoding=utf-8
-set guifont=Fura\ Code\ Regular\ Nerd\ Font\ Complete:h12
+set guifont=FiraCode\ Nerd\ Font\ Mono:h12
 
 
 let mapleader = ","
@@ -71,11 +69,9 @@ let g:airline#extensions#xkblayout#enabled = 0 "Про это позже рас�
 " }}}
 
 
-autocmd FileType python map <buffer> <F9> :w<CR>:exec '!python' shellescape(@%, 1)<CR>
 filetype plugin on
 filetype plugin indent on   "allow auto-indenting depending on file type
 syntax on                   " syntax highlighting
-autocmd FileType python imap <buffer> <F9> <esc>:w<CR>:exec '!python' shellescape(@%, 1)<CR>
 nmap <leader>nt :NERDTree<cr>
 " jedi options {{{ 
 let g:jedi#auto_initialization = 0
@@ -112,7 +108,7 @@ nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 " }}}
 
-autocmd FileType python,python3,py,py3 map <F5> :!python % <CR>
+autocmd FileType python,python3,py,py3 map <F9> :!python % <CR>
 autocmd Filetype r,R map <f5> :!Rscript % <CR>
 autocmd FileType CPP,Cpp,cpp map <F5> :!g++ % -o %:r.out<CR>
 

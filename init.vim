@@ -20,15 +20,15 @@ Plug 'tell-k/vim-autopep8'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-rmarkdown'
 Plug 'vim-pandoc/vim-pandoc-syntax'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'ErichDonGubler/vim-sublime-monokai'
 Plug 'BurntSushi/ripgrep'
 Plug 'sharkdp/fd'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'Valloric/YouCompleteMe'
+Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' }
 call plug#end()
 
 inoremap jk <ESC>
-inoremap <expr> <cr> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
 
 colorscheme sublimemonokai
 syntax on
@@ -43,16 +43,20 @@ set incsearch               " incremental search
 set tabstop=4               " number of columns occupied by a tab 
 set shiftwidth=4            " width for autoindents
 set autoindent              " indent a new line the same amount as the line just typed
-set number                  " add line numbers
 set wildmode=longest,list   " get bash-like tab completions
 set cc=80                  " set an 80 column border for good coding style
 set linespace=3
 set mouse=a                 " enable mouse click
 
-set cursorline              " highlight current cursorline
 set ttyfast                 " Speed up scrolling in Vim
 set encoding=utf-8
 set guifont=FiraCode\ Nerd\ Font\ Mono:h12
+
+set guioptions=
+set showtabline=0
+set number    
+set cursorline
+set clipboard=unnamed
 
 
 let mapleader = ","
@@ -86,31 +90,12 @@ let g:jedi#use_tabs_not_buffers = 0
 let g:jedi#show_call_signatures_modes = 'i'  " ni = also in normal mode
 let g:jedi#enable_speed_debugging=0
 let g:jedi#force_py_version = 3
+let g:jedi#completions_enabled = 0
 let g:pymode_python = 'python3'
 
-" }}}
-
-" COC configuration {{{
-let g:coc_global_extensions = [
-  \ 'coc-snippets',
-  \ 'coc-pairs',
-  \ 'coc-tsserver',
-  \ 'coc-eslint', 
-  \ 'coc-prettier', 
-  \ 'coc-json', 
-  \ 'coc-python',
-  \ 'coc-clangd',
-  \ ]
-" GoTo code navigation.
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-" }}}
-
 autocmd FileType python,python3,py,py3 map <F9> :!python % <CR>
-autocmd Filetype r,R map <f5> :!Rscript % <CR>
-autocmd FileType CPP,Cpp,cpp map <F5> :!g++ % -o %:r.out<CR>
+autocmd Filetype r,R map <f9> :!Rscript % <CR>
+autocmd FileType CPP,Cpp,cpp map <F9> :!g++ % -o %:r.out<CR>
 
 " Telescope options {{{
 nnoremap <leader>ff <cmd>Telescope find_files<cr>

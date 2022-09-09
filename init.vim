@@ -26,9 +26,13 @@ Plug 'sharkdp/fd'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'Valloric/YouCompleteMe'
 Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' }
+Plug 'puremourning/vimspector'
+Plug 'tpope/vim-obsession'
 call plug#end()
 
 inoremap jk <ESC>
+nnoremap <silent> <leader>f :FZF<cr>
+nnoremap <silent> <leader>F :FZF ~<cr>
 
 colorscheme sublimemonokai
 syntax on
@@ -37,6 +41,7 @@ set noswapfile
 set nocompatible            " disable compatibility to old-time vi
 set showmatch               " show matching 
 set ignorecase              " case insensitive 
+set smartcase
 set mouse=v                 " middle-click paste with 
 set hlsearch                " highlight search 
 set incsearch               " incremental search
@@ -67,7 +72,7 @@ let g:python_host_prog = 'C:\Users\anton.konev\AppData\Local\Programs\Python\Pyt
 let g:airline_theme='afterglow'
 let g:airline_powerline_fonts = 1 "Включить поддержку Powerline шрифтов
 let g:airline#extensions#keymap#enabled = 0 "Не показывать текущий маппинг
-let g:airline_section_z = "\ue0a1:%l/%L Col:%c" "Кастомная графа положения курсора
+let g:airline_section_z = "\ue0a1:%l/%L Col:%c %{ObsessionStatus()}" "Кастомная графа положения курсора
 let g:Powerline_symbols='unicode' "Поддержка unicode
 let g:airline#extensions#xkblayout#enabled = 0 "Про это позже расскажу
 " }}}
@@ -77,6 +82,7 @@ filetype plugin on
 filetype plugin indent on   "allow auto-indenting depending on file type
 syntax on                   " syntax highlighting
 nmap <leader>nt :NERDTree<cr>
+
 " jedi options {{{ 
 let g:jedi#auto_initialization = 0
 let g:jedi#completions_enabled = 0
